@@ -35,30 +35,64 @@
 					<section>
 						<h1>NATS.io</h1>
 						<ul>
-							<li>messaging system</li>
-							<li>written in Ruby, re-written in Go</li>
-							<li>at-most-once delivery</li>
+							<li>Core NATS</li>
+							<li>Jetstream</li>
 						</ul>
+					</section>
+					<section>
+						<h1>Core NATS</h1>
+						<ul>
+							<li>Publish-Subscribe</li>
+							<li>Request-Reply</li>
+							<li>Queue Groups</li>
+						</ul>
+					</section><section>
+					<h1>Jetstream</h1>
+					<ul>
+						<li>at-least-once-delivery</li>
+						<li>built on top of Core NATS</li>
+					</ul>
+				</section>
+				</section>
+
+				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
+					<section>
+						<h1>Architecture</h1>
+					</section>
+					<section>
+						<h1>Single node</h1>
+						<img src="img/nats-single.png" />
+					</section>
+					<section>
+						<h1>Multiple nodes</h1>
+						<img src="img/nats-multi.png" />
 					</section>
 				</section>
 
 				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
-					<h1>Architecture</h1>
-					<h3></h3>
+					<section>
+						<h1>Protocol</h1>
+						<h3>Text based</h3>
+						<h3>Reduced message set</h3>
+						<h3>Space-delimited fields</h3>
+						<h3>Messages terminated with CR-LF</h3>
+					</section>
+					<section>
+						<h1>Protocol</h1>
+						<h3>Client -> Server</h3>
+						<pre><code>| PUB | HPUB | SUB | UNSUB |</code></pre>
+						<pre><code>| CONNECT | PING | PONG | </code></pre>
+					</section>
+					<section>
+						<h1>Protocol</h1>
+						<h3>Server -> Client</h3>
+						<pre><code>| MSG | HMSG | +OK | -ERR |</code></pre>
+						<pre><code>| INFO | PING | PONG | </code></pre>
+					</section>
 				</section>
 
 				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
-					<h1>Protocol</h1>
-					<h3></h3>
-				</section>
-
-				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
-					<h1>Single node</h1>
-					<h3></h3>
-				</section>
-
-				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
-					<h1>Multiple nodes</h1>
+					<h1>Performance</h1>
 					<h3></h3>
 				</section>
 
@@ -69,7 +103,11 @@
 
 				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
 					<h1>Ops</h1>
-					<h3></h3>
+					<h3>Config - Max payload</h3>
+					<h3>Logs + docker</h3>
+					<h3>Bitnami distro</h3>
+					<h3>varz</h3>
+					<h3>connz</h3>
 				</section>
 
 				<section data-background-gradient="radial-gradient(circle at -5% 105%, rgb(0, 181, 177) 0%, rgb(0, 130, 186) 32%, rgb(0, 81, 149) 96%)">
