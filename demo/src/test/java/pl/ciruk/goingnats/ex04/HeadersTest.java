@@ -1,6 +1,5 @@
 package pl.ciruk.goingnats.ex04;
 
-import io.nats.client.Dispatcher;
 import io.nats.client.Nats;
 import io.nats.client.Options;
 import io.nats.client.impl.Headers;
@@ -16,7 +15,7 @@ public class HeadersTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Test
-    void shouldName() throws Exception {
+    void shouldPublishHeaders() throws Exception {
         final var options = Options.builder()
                 .connectionName("client-1@" + InetAddress.getLocalHost().getHostName())
                 .server("nats://localhost:4222")
