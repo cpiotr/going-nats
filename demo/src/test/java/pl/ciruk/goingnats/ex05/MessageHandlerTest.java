@@ -1,6 +1,5 @@
-package pl.ciruk.goingnats.ex04;
+package pl.ciruk.goingnats.ex05;
 
-import io.nats.client.ErrorListener;
 import io.nats.client.Nats;
 import io.nats.client.Options;
 import org.junit.jupiter.api.Test;
@@ -10,8 +9,6 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import org.testcontainers.shaded.com.google.common.base.Strings;
-import org.testcontainers.utility.MountableFile;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;

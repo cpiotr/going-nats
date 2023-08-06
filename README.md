@@ -22,3 +22,8 @@ telnet localhost 4223
 pub subject1 5
 hello
 ```
+
+## Headers
+```
+connect {"headers":true}
+```
