@@ -33,7 +33,7 @@ public class MessageHandlerTest {
     static final String SUBJECT2 = "TestSubject2";
 
     @Test
-    void shouldReceiveBigMessage() throws IOException, InterruptedException {
+    void shouldReceiveAllMessages() throws IOException, InterruptedException {
         final var options = new Options.Builder()
                 .connectionName("client-3@" + InetAddress.getLocalHost().getHostName())
                 .server("nats://%s:%s".formatted(NATS_SERVER.getHost(), NATS_SERVER.getMappedPort(4222)))
