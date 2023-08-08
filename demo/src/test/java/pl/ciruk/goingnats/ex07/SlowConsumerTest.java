@@ -1,6 +1,8 @@
 package pl.ciruk.goingnats.ex07;
 
 import io.nats.client.*;
+import io.nats.client.impl.ErrorListenerLoggerImpl;
+import io.nats.client.support.Status;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -30,6 +33,7 @@ public class SlowConsumerTest {
             .withExposedPorts(4222, 8222)
             .withCopyFileToContainer(MountableFile.forClasspathResource("ex07.conf"), "/etc/nats/nats-server.conf")
             .withReuse(true)
+            .withLogConsumer(outputFrame -> LOGGER.info("{}", outputFrame.getUtf8String()))
             .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(30)));
     static final String SUBJECT1 = "TestSubject";
 
@@ -98,7 +102,7 @@ public class SlowConsumerTest {
         for (int i = 1; i <= 10_000_000; i++) {
             connection.publish(SUBJECT1, "Message%d".formatted(i).getBytes(StandardCharsets.UTF_8));
             if (i % 1_000_000 == 0) {
-                LOGGER.info("Published {}k messages", i / 1_000_000);
+                LOGGER.info("Published {}M messages", i / 1_000_000);
             }
         }
 
@@ -110,26 +114,23 @@ public class SlowConsumerTest {
         final var localPort = 14222;
         SlowProxy.start(NATS_SERVER.getHost(), NATS_SERVER.getMappedPort(4222), localPort, 1);
 
+        final var listener = new ErrorListenerLoggerImpl();
         final var options = new Options.Builder()
-                .errorListener(new ErrorListener() {
-                    @Override
-                    public void slowConsumerDetected(Connection conn, Consumer consumer) {
-                        LOGGER.info("I'm a slow consumer :( Dropped {} messages from {}", consumer.getDroppedCount(), conn.getServerInfo().getHost());
-                    }
-                })
+                .connectionName("slooooow")
+                .errorListener(listener)
                 .connectionListener(new ConnectionListener() {
                     @Override
                     public void connectionEvent(Connection connection, Events events) {
-                        LOGGER.info("{}", events.name());
+                        LOGGER.info("{}", events);
                     }
                 })
-                .connectionName("slooooow")
                 .server("nats://%s:%s".formatted("localhost", localPort))
                 .build();
         final var connection = Nats.connect(options);
+
         LOGGER.info("http://{}:{}/connz", NATS_SERVER.getHost(), NATS_SERVER.getMappedPort(8222));
 
-        final var limit = 10_000_000;
+        final var limit = 1_000_000;
         var latch = new CountDownLatch(limit);
         var counter = new AtomicInteger();
         final var slowDispatcher = connection.createDispatcher(message -> {
@@ -139,14 +140,16 @@ public class SlowConsumerTest {
             }
             latch.countDown();
         });
-        slowDispatcher.setPendingLimits(0, 0);
         slowDispatcher.subscribe(SUBJECT1);
 
-        final var publishingConnection = Nats.connect("nats://%s:%s".formatted(NATS_SERVER.getHost(), NATS_SERVER.getMappedPort(4222)));
+        final var publisherOptions = Options.builder()
+                .server("nats://%s:%s".formatted(NATS_SERVER.getHost(), NATS_SERVER.getMappedPort(4222)))
+                .build();
+        final var publishingConnection = Nats.connect(publisherOptions);
         for (int i = 1; i <= limit; i++) {
             publishingConnection.publish(SUBJECT1, "Message%d".formatted(i).getBytes(StandardCharsets.UTF_8));
             if (i % (limit/100) == 0) {
-                LOGGER.info("Published {}M messages", i / (limit/100));
+                LOGGER.info("Published {} messages", i);
             }
         }
 

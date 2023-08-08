@@ -1,9 +1,7 @@
 package pl.ciruk.goingnats.ex02;
 
-import io.nats.client.Connection;
-import io.nats.client.ConnectionListener;
-import io.nats.client.Nats;
-import io.nats.client.Options;
+import io.nats.client.*;
+import io.nats.client.impl.ErrorListenerLoggerImpl;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +29,12 @@ public class OptionsTest {
         final var options = Options.builder()
                 .connectionName("client-2@" + InetAddress.getLocalHost().getHostName())
                 .server("nats://localhost:4222")
+                .errorListener(new ErrorListener() {
+                    @Override
+                    public void exceptionOccurred(Connection conn, Exception exp) {
+                        LOGGER.error("Exception occurred", exp);
+                    }
+                })
                 .connectionListener(new ConnectionListener() {
                     @Override
                     public void connectionEvent(Connection connection, Events events) {
