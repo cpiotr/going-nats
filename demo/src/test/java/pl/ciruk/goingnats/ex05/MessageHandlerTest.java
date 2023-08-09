@@ -44,12 +44,11 @@ public class MessageHandlerTest {
         var latch = new CountDownLatch(4);
         final var slowDispatcher = connection.createDispatcher(message -> {
             LOGGER.info("Slow received: {}", new String(message.getData(), StandardCharsets.UTF_8));
-            Thread.sleep(Duration.ofSeconds(10));
+            Thread.sleep(Duration.ofSeconds(1));
             latch.countDown();
         });
         final var dispatcher = connection.createDispatcher(message -> {
             LOGGER.info("Received: {}", new String(message.getData(), StandardCharsets.UTF_8));
-
         });
         slowDispatcher.subscribe(SUBJECT1);
         slowDispatcher.subscribe(SUBJECT2);

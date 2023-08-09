@@ -1,7 +1,6 @@
 package pl.ciruk.goingnats.ex02;
 
 import io.nats.client.*;
-import io.nats.client.impl.ErrorListenerLoggerImpl;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
