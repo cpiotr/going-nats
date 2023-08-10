@@ -213,7 +213,7 @@ section.has-light-background, section.has-light-background h1, section.has-light
   font-family: var(--r-code-font);
   line-height: 1.2em;
   word-wrap: break-word;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .reveal code {
@@ -354,4 +354,8 @@ section.has-light-background, section.has-light-background h1, section.has-light
   .backgrounds {
     background-color: var(--r-background-color);
   }
+}
+
+.shadow {
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }

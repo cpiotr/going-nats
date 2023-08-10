@@ -179,7 +179,7 @@
 
 	word-wrap: break-word;
 
-	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .reveal code {
@@ -258,6 +258,7 @@
 
 .reveal img {
 	margin: var(--r-block-margin) 0;
+	box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 
