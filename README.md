@@ -27,3 +27,8 @@ hello
 ```
 connect {"headers":true}
 ```
+
+## Slow consumer heap inspection
+```
+jcmd `jcmd | grep -i slowconsumer | awk '{print $1}'` GC.class_histogram -all | head
+```

@@ -201,7 +201,7 @@
 					</section>
 					<section>
 						<h1>Options</h1>
-						<h4>connection mame</h4>
+						<h4>connection name</h4>
 						<h4>callbacks</h4>
 					</section>
 					<section>
@@ -225,8 +225,15 @@
 					</section>
 					<section>
 						<h1>Options</h1>
-						<h4>maxMessagesInOutgoingQueue</h4>
-						<h4>discardMessagesWhenOutgoingQueueFull</h4>
+						<pre><code>
+							maxMessagesInOutgoingQueue(int)
+						</code></pre>
+					</section>
+					<section>
+						<h1>Options</h1>
+						<pre><code>
+							discardMessagesWhenOutgoingQueueFull()
+						</code></pre>
 					</section>
 				</section>
 
@@ -237,15 +244,19 @@
 					<section>
 						<h1>Client side</h1>
 						<h3>Error callback</h3>
-						<h3>dispatcher.setPendingLimits</h3>
+					</section>
+					<section>
+						<h1>Client side</h1>
+						<h3>Limits</h3>
+						<pre><code>
+							var dispatcher = ...;
+							dispatcher.setPendingLimits(int, int)
+						</code></pre>
 					</section>
 					<section>
 						<h1>Server side</h1>
 						<h3>Automatic disconnection</h3>
 						<h3>write_deadline</h3>
-					</section>
-					<section>
-						<h1>???</h1>
 					</section>
 				</section>
 
@@ -266,6 +277,27 @@
 
 					<section>
 						<h3>Fixed in: 2.6.5</h3>
+						<h3>Related GitHub issue: <a href="https://github.com/nats-io/nats-server/issues/2631">#2631</a></h3>
+					</section>
+
+					<section>
+						<h1>Root cause</h1>
+						<h3>Upon receiving messages, NATS checks matching subscriptions</h3>
+					</section>
+					<section>
+						<h1>Root cause</h1>
+						<h3>if subscription is found</h3>
+						<h3>send those messages from the producer's readLoop.</h3>
+					</section>
+					<section>
+						<h1>Root cause</h1>
+						<h3>time budget was used</h3>
+						<h3>limiting time sending to clients from the producer's readLoo</h3>
+					</section>
+					<section>
+						<h1>Root cause</h1>
+						<h3>when a subscription's connection TCP buffer was full</h3>
+						<h3>the TCP write would block up to write_deadline</h3>
 					</section>
 
 					<section data-background-image="https://media0.giphy.com/media/MDfqOwSso3AJDqXHpd/giphy.gif?cid=ecf05e473h1v2xo8s3bcsbv9p3gxq79gydcldui762a47lpo&ep=v1_gifs_search&rid=giphy.gif&ct=g">
