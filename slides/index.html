@@ -205,8 +205,8 @@
 					</section>
 					<section>
 						<h1>Options</h1>
-						<h4>connection name</h4>
-						<h4>callbacks</h4>
+						<h3>connection name</h3>
+						<h3>callbacks</h3>
 					</section>
 					<section>
 						<h1>Connection listener</h1>
@@ -218,8 +218,8 @@
 					</section>
 					<section>
 						<h1>Headers</h1>
-						<h4>Key (String) -> List of String values</h4>
-						<h4 class="fragment">Unnecessary allocation</h4>
+						<h3>Key (String) -> List of String values</h3>
+						<h3 class="fragment">Unnecessary allocation</h3>
 					</section>
 				</section>
 
@@ -260,7 +260,9 @@
 					<section>
 						<h1>Server side</h1>
 						<h3>Automatic disconnection</h3>
-						<h3>write_deadline</h3>
+						<pre><code class="yaml">
+							write_deadline: '1s'
+						</code></pre>
 					</section>
 				</section>
 
