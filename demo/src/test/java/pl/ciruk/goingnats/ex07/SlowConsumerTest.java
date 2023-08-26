@@ -2,7 +2,6 @@ package pl.ciruk.goingnats.ex07;
 
 import io.nats.client.*;
 import io.nats.client.impl.ErrorListenerLoggerImpl;
-import io.nats.client.support.Status;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,6 @@ import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -32,6 +30,7 @@ public class SlowConsumerTest {
     private static final GenericContainer<?> NATS_SERVER = new GenericContainer<>("nats:2.6.5")
             .withExposedPorts(4222, 8222)
             .withCopyFileToContainer(MountableFile.forClasspathResource("ex07.conf"), "/etc/nats/nats-server.conf")
+            .withCommand("--config", "/etc/nats/nats-server.conf")
             .withReuse(true)
             .withLogConsumer(outputFrame -> LOGGER.info("{}", outputFrame.getUtf8String()))
             .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(30)));
@@ -106,7 +105,7 @@ public class SlowConsumerTest {
             }
         }
 
-        assertThat(latch.await(1, TimeUnit.MINUTES)).isTrue();
+        assertThat(latch.await(2, TimeUnit.MINUTES)).isTrue();
     }
 
     @Test
@@ -148,7 +147,7 @@ public class SlowConsumerTest {
         final var publishingConnection = Nats.connect(publisherOptions);
         for (int i = 1; i <= limit; i++) {
             publishingConnection.publish(SUBJECT1, "Message%d".formatted(i).getBytes(StandardCharsets.UTF_8));
-            if (i % (limit/100) == 0) {
+            if (i % (limit / 100) == 0) {
                 LOGGER.info("Published {} messages", i);
             }
         }

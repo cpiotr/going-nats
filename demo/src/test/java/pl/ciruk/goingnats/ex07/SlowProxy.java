@@ -193,8 +193,6 @@ public class SlowProxy {
         }
     }
 
-    private static AtomicInteger counter = new AtomicInteger();
-
     private static void sleepUninterruptedly() {
         try {
             Thread.sleep(200);
