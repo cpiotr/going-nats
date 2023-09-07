@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.net.InetAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.CountDownLatch;
 
 public class HeadersTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -22,15 +23,17 @@ public class HeadersTest {
                 .build();
         final var connection = Nats.connect(options);
 
+        var receivedLatch = new CountDownLatch(1);
         final var dispatcher = connection.createDispatcher(message -> {
             message.getHeaders().forEach((key, values) -> LOGGER.info("Header: {}->{}", key, values));
+            receivedLatch.countDown();
         });
         dispatcher.subscribe("Subject1");
-
 
         final var headers = new Headers();
         headers.add("Key1", "Value1");
         headers.add("Key2", "3.14159263");
         connection.publish("Subject1", headers, "This is a sample body".getBytes(StandardCharsets.UTF_8));
+        receivedLatch.await();
     }
 }

@@ -33,7 +33,7 @@ public class MaxPayloadTest {
             .withReuse(true)
             .withCopyFileToContainer(MountableFile.forClasspathResource("ex03.conf"), "/etc/nats/nats-server.conf")
             .withCommand("--config", "/etc/nats/nats-server.conf")
-            .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(30)));
+            .waitingFor(Wait.forHttp("/").forPort(8222).withStartupTimeout(Duration.ofSeconds(30)));
     static final String SUBJECT = "TestSubject";
 
     @Test

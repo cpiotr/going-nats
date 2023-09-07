@@ -6,7 +6,7 @@ telnet localhost 4333
 sub subject1 id1
 
 # Connect producer
-telnet localhost 4333
+telnet localhost 4333  # or nc -c localhost 4333
 pub subject1 5
 hello
 

@@ -32,7 +32,7 @@ public class FastProducerTest {
     private static final GenericContainer<?> NATS_SERVER = new GenericContainer<>("nats:2.6.5")
             .withExposedPorts(4222, 8222)
             .withReuse(true)
-            .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(30)));
+            .waitingFor(Wait.forHttp("/").forPort(8222).withStartupTimeout(Duration.ofSeconds(30)));
     static final String SUBJECT1 = "TestSubject";
 
     @Test

@@ -33,7 +33,7 @@ public class SlowConsumerTest {
             .withCommand("--config", "/etc/nats/nats-server.conf")
             .withReuse(true)
             .withLogConsumer(outputFrame -> LOGGER.info("{}", outputFrame.getUtf8String()))
-            .waitingFor(Wait.forListeningPort().withStartupTimeout(Duration.ofSeconds(30)));
+            .waitingFor(Wait.forHttp("/").forPort(8222).withStartupTimeout(Duration.ofSeconds(30)));
     static final String SUBJECT1 = "TestSubject";
 
     @Test
@@ -151,6 +151,7 @@ public class SlowConsumerTest {
                 LOGGER.info("Published {} messages", i);
             }
         }
+        publishingConnection.close();
 
         assertThat(latch.await(5, TimeUnit.MINUTES)).isTrue();
     }
