@@ -1,4 +1,4 @@
-package pl.ciruk.goingnats.ex07;
+package pl.ciruk.goingnats.ex06;
 
 import com.github.terma.javaniotcpproxy.StaticTcpProxyConfig;
 import com.github.terma.javaniotcpproxy.TcpProxyConfig;

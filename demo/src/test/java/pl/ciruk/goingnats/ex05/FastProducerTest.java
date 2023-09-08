@@ -1,4 +1,4 @@
-package pl.ciruk.goingnats.ex06;
+package pl.ciruk.goingnats.ex05;
 
 import io.nats.client.*;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package pl.ciruk.goingnats.ex07;
+package pl.ciruk.goingnats.ex06;
 
 import io.nats.client.*;
 import io.nats.client.impl.ErrorListenerLoggerImpl;
