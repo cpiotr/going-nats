@@ -1,5 +1,8 @@
 # Going NATS
 
+## Slides
+Slides can be accessed [here](./slides/index.html).
+
 ## Single node
 ```
 docker run --rm -p 4333:4222 nats
