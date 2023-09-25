@@ -32,3 +32,7 @@ connect {"headers":true}
 ```
 jcmd `jcmd | grep -i slowconsumer | awk '{print $1}'` GC.class_histogram -all | head
 ```
+
+## Joke
+43 Why did the two Java methods get a divorce?
+35 Because they had constant arguments
