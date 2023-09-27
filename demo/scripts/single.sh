@@ -2,7 +2,7 @@
 docker run --rm -p 4333:4222 nats
 
 # Connect client
-telnet localhost 4333
+telnet localhost 4333 # or nc -c localhost 4333
 sub subject1 id1
 
 # Connect producer
